@@ -1,0 +1,6 @@
+{
+  "name": "Health is Wealth",
+  "description": "Gamified lifestyle, exercise activity, and nutrition consumption tracking app for health-conscious consumers in Singapore.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
