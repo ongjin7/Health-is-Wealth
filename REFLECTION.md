@@ -30,7 +30,7 @@ Integrated with a sports wearable, the app **cuts daily tracking of both exercis
 
 **Augmented capacity**
 
-I had a working, deployed health tracking app in 1 hour, having never written a line of React. The build ran through roughly 20 prompts in Google AI Studio. Without the pairing I would not have produced a running front-end app at all in the time available. 
+I had a working, deployed health tracking app in 1 hour, having never written a line of React. The build ran through roughly 11 prompts in Google AI Studio. Without the pairing I would not have produced a running front-end app at all in the time available. 
 
 The AI pairing also reduced the time taken between change and deployment. AI Studio is synced to GitHub and auto-deploys to Vercel, so a prompt in the chat panel became a live change on a public URL in a few minutes. 
 
