@@ -111,7 +111,7 @@ export const DashboardScreen = ({
               Summary
             </h2>
             <p className="text-xs text-slate-500 font-medium">
-              Comparing your energy intake vs. physical burn for {timeRange}
+              Energy Intake vs Physical burn
             </p>
           </div>
 
@@ -141,14 +141,11 @@ export const DashboardScreen = ({
         {/* 3 High-contrast metric cards side-by-side on iPhone 15 Pro Max and desktop */}
         <div className="grid grid-cols-3 gap-2 sm:gap-3 my-3">
           {/* Burnt */}
-          <div className="bg-emerald-50 p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-emerald-100 flex flex-col justify-between">
+          <div className="bg-emerald-50 p-2 sm:p-3.5 rounded-2xl sm:rounded-3xl border border-emerald-100 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between text-xs font-black text-emerald-600 uppercase mb-1">
-                <div className="flex items-center gap-1 min-w-0">
-                  <Flame className="w-3.5 h-3.5 text-emerald-600 fill-emerald-500 shrink-0" />
-                  <span className="truncate">Burnt</span>
-                </div>
-                <span className="hidden min-[410px]:inline-block text-[9px] font-bold text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded-full shrink-0">Active</span>
+              <div className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-emerald-600 uppercase mb-1">
+                <Flame className="w-3.5 h-3.5 text-emerald-600 fill-emerald-500 shrink-0" />
+                <span>Burnt</span>
               </div>
               <p className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-emerald-700 tracking-tight leading-tight">
                 {totalCaloriesBurnt.toLocaleString()} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal text-emerald-600">kcal</span>
@@ -168,14 +165,11 @@ export const DashboardScreen = ({
           </div>
 
           {/* Intake */}
-          <div className="bg-amber-50 p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-amber-100 flex flex-col justify-between">
+          <div className="bg-amber-50 p-2 sm:p-3.5 rounded-2xl sm:rounded-3xl border border-amber-100 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between text-xs font-black text-amber-600 uppercase mb-1">
-                <div className="flex items-center gap-1 min-w-0">
-                  <Utensils className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span className="truncate">Intake</span>
-                </div>
-                <span className="hidden min-[410px]:inline-block text-[9px] font-bold text-amber-700 bg-amber-100/80 px-1.5 py-0.5 rounded-full shrink-0">Budget</span>
+              <div className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-amber-600 uppercase mb-1">
+                <Utensils className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span>Intake</span>
               </div>
               <p className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-amber-700 tracking-tight leading-tight">
                 {totalCaloriesIntake.toLocaleString()} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal text-amber-600">kcal</span>
@@ -197,14 +191,11 @@ export const DashboardScreen = ({
           </div>
 
           {/* Active / Net */}
-          <div className="bg-blue-50 p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-blue-100 flex flex-col justify-between">
+          <div className="bg-blue-50 p-2 sm:p-3.5 rounded-2xl sm:rounded-3xl border border-blue-100 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between text-xs font-black text-blue-600 uppercase mb-1">
-                <div className="flex items-center gap-1 min-w-0">
-                  <Timer className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                  <span className="truncate">Active & Net</span>
-                </div>
-                <span className="hidden min-[410px]:inline-block text-[9px] font-bold text-blue-700 bg-blue-100/80 px-1.5 py-0.5 rounded-full shrink-0">Time</span>
+              <div className="flex items-center gap-1 text-[11px] sm:text-xs font-black text-blue-600 uppercase mb-1">
+                <Timer className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span>Active & Net</span>
               </div>
               <p className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-blue-700 tracking-tight leading-tight">
                 {totalDurationMin} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal text-blue-600">mins</span>
@@ -240,8 +231,8 @@ export const DashboardScreen = ({
         className="card bg-emerald-800 p-5 sm:p-6 text-white rounded-[28px] shadow-sm"
       >
         <div className="flex items-center justify-between gap-2 mb-4">
-          <h3 className="text-base sm:text-lg font-black uppercase tracking-tight">
-            GOAL PROGRESS: <span className="text-emerald-300">LOSE 5KG / 6 MOS</span>
+          <h3 className="text-base sm:text-lg font-black tracking-tight">
+            Goal: <span className="text-emerald-300">Lose 5KG in 6 mths</span>
           </h3>
           <span className="text-xs font-black text-emerald-200 bg-emerald-900/80 px-2.5 py-1 rounded-lg border border-emerald-700">
             48% Reached

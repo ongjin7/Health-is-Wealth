@@ -70,7 +70,7 @@ export const ActivityScreen = ({
         <div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             <Activity className="w-6 h-6 text-emerald-600" />
-            <span>Exercise & Activity Deep Dive</span>
+            <span>Exercise and Activity</span>
           </h2>
         </div>
         <button

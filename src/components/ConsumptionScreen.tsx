@@ -91,7 +91,7 @@ export const ConsumptionScreen = ({
         <div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             <Utensils className="w-6 h-6 text-emerald-600" />
-            <span>Food Consumption Tracking</span>
+            <span>Food Tracking</span>
           </h2>
         </div>
         <button
