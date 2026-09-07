@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { 
   Flame, 
   Utensils, 
@@ -11,7 +11,9 @@ import {
   Clock, 
   Sparkles,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Minus,
+  Maximize2
 } from 'lucide-react';
 import { ExerciseActivity, FoodConsumption, HRZone, MealType, ActivityCategory } from '../types';
 
@@ -19,6 +21,7 @@ interface QuickLogWidgetProps {
   isOpen: boolean;
   activeMode: 'exercise' | 'food';
   onClose: () => void;
+  onOpen: (mode: 'exercise' | 'food') => void;
   onAddExercise: (exercise: ExerciseActivity) => void;
   onAddFood: (food: FoodConsumption) => void;
   onSwitchMode: (mode: 'exercise' | 'food') => void;
@@ -28,6 +31,7 @@ export const QuickLogWidget = ({
   isOpen,
   activeMode,
   onClose,
+  onOpen,
   onAddExercise,
   onAddFood,
   onSwitchMode,
@@ -55,6 +59,15 @@ export const QuickLogWidget = ({
 
   // Feedback notification
   const [successMsg, setSuccessMsg] = useState('');
+
+  // Minimized state
+  const [isMinimized, setIsMinimized] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsMinimized(false);
+    }
+  }, [isOpen]);
 
   // Singapore Quick Presets for fast tapping on mobile
   const exercisePresets = [
@@ -155,9 +168,9 @@ export const QuickLogWidget = ({
               id="open-log-exercise-dock-btn"
               type="button"
               onClick={() => {
-                onSwitchMode('exercise');
+                onOpen('exercise');
               }}
-              className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-black px-4 py-2.5 rounded-full transition-all shadow-sm min-h-[44px] touch-manipulation active:scale-95"
+              className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-black px-4 py-2.5 rounded-full transition-all shadow-sm min-h-[44px] touch-manipulation active:scale-95 cursor-pointer"
             >
               <Flame className="w-4 h-4 fill-white" />
               <span>Key In Exercise</span>
@@ -166,12 +179,94 @@ export const QuickLogWidget = ({
               id="open-log-food-dock-btn"
               type="button"
               onClick={() => {
-                onSwitchMode('food');
+                onOpen('food');
               }}
-              className="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-black px-4 py-2.5 rounded-full transition-all shadow-sm min-h-[44px] touch-manipulation active:scale-95"
+              className="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-black px-4 py-2.5 rounded-full transition-all shadow-sm min-h-[44px] touch-manipulation active:scale-95 cursor-pointer"
             >
               <Utensils className="w-4 h-4" />
               <span>Key In Food</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
+  if (isMinimized) {
+    return (
+      <aside 
+        aria-label="Health record input minimized dock"
+        className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-200"
+      >
+        <div 
+          id="quick-log-minimized-card"
+          className="bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl rounded-2xl p-2 sm:p-2.5 flex items-center gap-2 max-w-sm ring-1 ring-slate-900/5"
+        >
+          {/* Re-expand trigger button */}
+          <button
+            id="restore-quick-log-btn"
+            type="button"
+            onClick={() => setIsMinimized(false)}
+            className="flex items-center gap-2 hover:bg-slate-50 p-1 rounded-xl transition-colors text-left cursor-pointer group"
+          >
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+              activeMode === 'exercise' ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'
+            }`}>
+              {activeMode === 'exercise' ? (
+                <Flame className="w-4 h-4 fill-emerald-500 text-emerald-500" />
+              ) : (
+                <Utensils className="w-4 h-4 text-amber-500" />
+              )}
+            </div>
+            <div className="pr-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-black text-slate-800 group-hover:text-emerald-700">
+                  {activeMode === 'exercise' ? 'Key In Exercise' : 'Key In Food'}
+                </span>
+                <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md">
+                  Minimized
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 truncate max-w-[130px] sm:max-w-[170px]">
+                {activeMode === 'exercise' ? (exerciseName || 'Drafting workout') : (foodName || 'Drafting meal')}
+              </p>
+            </div>
+          </button>
+
+          {/* Quick toggle mode and controls */}
+          <div className="flex items-center gap-1 border-l border-slate-200 pl-1.5">
+            <button
+              type="button"
+              onClick={() => onSwitchMode(activeMode === 'exercise' ? 'food' : 'exercise')}
+              title={`Switch to ${activeMode === 'exercise' ? 'Food' : 'Exercise'}`}
+              className="text-[10px] font-bold text-slate-600 hover:text-slate-900 px-1.5 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              {activeMode === 'exercise' ? 'Food' : 'Ex.'}
+            </button>
+
+            {/* Expand button */}
+            <button
+              id="expand-quick-log-btn"
+              type="button"
+              onClick={() => setIsMinimized(false)}
+              title="Expand pop-up"
+              className="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <Maximize2 className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Close button */}
+            <button
+              id="close-minimized-quick-log-btn"
+              type="button"
+              onClick={() => {
+                setIsMinimized(false);
+                onClose();
+              }}
+              title="Close pop-up"
+              className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -183,63 +278,88 @@ export const QuickLogWidget = ({
     <aside 
       aria-label="Activity input modal dialog"
       className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
     >
       <div 
         id="quick-log-modal-card"
-        className="bg-white w-full max-w-lg rounded-t-[32px] sm:rounded-[32px] border border-emerald-100 shadow-2xl p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto"
+        className="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl border border-slate-200 shadow-2xl p-4 sm:p-5 space-y-3 max-h-[84vh] overflow-y-auto"
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between gap-2 border-b border-emerald-100/80 pb-3.5">
+        <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
           <div>
             <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-              Health Tracker Input Widget
+              <Sparkles className="w-3 h-3 text-emerald-500" />
+              Health Tracker Quick Log
             </span>
-            <h3 className="text-lg sm:text-xl font-black text-slate-800 tracking-tight">
-              Key In Your Daily Health Record
+            <h3 className="text-base font-black text-slate-800 tracking-tight">
+              {activeMode === 'exercise' ? 'Key In Exercise Activity' : 'Key In Food & Drink'}
             </h3>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-9 h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 flex items-center justify-center transition-colors touch-manipulation"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            {/* Minimize button */}
+            <button
+              id="minimize-quick-log-btn"
+              type="button"
+              onClick={() => setIsMinimized(true)}
+              title="Minimize pop-up"
+              className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors touch-manipulation cursor-pointer"
+              aria-label="Minimize"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            {/* Close button */}
+            <button
+              id="close-quick-log-btn"
+              type="button"
+              onClick={() => {
+                setIsMinimized(false);
+                onClose();
+              }}
+              title="Close pop-up"
+              className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors touch-manipulation cursor-pointer"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Mode Toggle Switcher */}
-        <div className="grid grid-cols-2 gap-2 bg-emerald-50/70 p-1.5 rounded-2xl border border-emerald-100">
+        <div className="grid grid-cols-2 gap-1.5 bg-slate-100/80 p-1 rounded-xl border border-slate-200/80">
           <button
             type="button"
             onClick={() => onSwitchMode('exercise')}
-            className={`py-2 px-3 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 min-h-[44px] transition-all ${
+            className={`py-1.5 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 min-h-[38px] transition-all cursor-pointer ${
               activeMode === 'exercise'
-                ? 'bg-white text-emerald-700 shadow-sm border border-emerald-200'
-                : 'text-slate-600 hover:text-slate-900 font-bold'
+                ? 'bg-white text-emerald-700 shadow-xs border border-emerald-200/80'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Flame className="w-4 h-4 text-emerald-500 fill-emerald-500" />
-            <span>1. Key In Exercise</span>
+            <Flame className="w-3.5 h-3.5 text-emerald-500 fill-emerald-500" />
+            <span>1. Exercise</span>
           </button>
 
           <button
             type="button"
             onClick={() => onSwitchMode('food')}
-            className={`py-2 px-3 rounded-xl text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 min-h-[44px] transition-all ${
+            className={`py-1.5 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 min-h-[38px] transition-all cursor-pointer ${
               activeMode === 'food'
-                ? 'bg-white text-amber-700 shadow-sm border border-amber-200'
-                : 'text-slate-600 hover:text-slate-900 font-bold'
+                ? 'bg-white text-amber-700 shadow-xs border border-amber-200/80'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Utensils className="w-4 h-4 text-amber-500" />
-            <span>2. Key In Food</span>
+            <Utensils className="w-3.5 h-3.5 text-amber-500" />
+            <span>2. Food</span>
           </button>
         </div>
 
         {/* Success toast banner */}
         {successMsg && (
-          <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2">
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
             <Check className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{successMsg}</span>
           </div>
@@ -247,19 +367,19 @@ export const QuickLogWidget = ({
 
         {/* MODE 1: EXERCISE INPUT FORM */}
         {activeMode === 'exercise' ? (
-          <form onSubmit={handleSaveExercise} className="space-y-3.5">
+          <form onSubmit={handleSaveExercise} className="space-y-3">
             {/* Quick Presets */}
             <div>
-              <span className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5">
-                Quick Tap Singapore Presets:
+              <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                Quick Presets:
               </span>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1">
                 {exercisePresets.map((p, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => handleExercisePreset(p)}
-                    className="text-[11px] font-bold bg-emerald-50 border border-emerald-200 text-emerald-900 px-2.5 py-1.5 rounded-xl hover:bg-emerald-100 transition-colors touch-manipulation"
+                    className="text-[10px] font-bold bg-emerald-50 border border-emerald-200/80 text-emerald-900 px-2 py-1 rounded-lg hover:bg-emerald-100 transition-colors touch-manipulation cursor-pointer"
                   >
                     {p.name} ({p.duration}m)
                   </button>
@@ -269,24 +389,24 @@ export const QuickLogWidget = ({
 
             {/* Exercise Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">
-                Exercise Activity Name *
+              <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
+                Activity Name *
               </label>
               <input
                 type="text"
                 value={exerciseName}
                 onChange={(e) => setExerciseName(e.target.value)}
-                placeholder="e.g. Swims, tennis, walk, basketball, runs"
-                className="w-full bg-emerald-50/40 border border-emerald-200/80 rounded-xl px-3.5 py-2.5 text-sm sm:text-base text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[44px]"
+                placeholder="e.g. Swims, tennis, walk, runs"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[38px]"
                 required
               />
             </div>
 
             {/* Duration & Calories */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  <Timer className="w-3.5 h-3.5 text-emerald-600" />
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5 flex items-center gap-1">
+                  <Timer className="w-3 h-3 text-emerald-600" />
                   <span>Duration (Mins) *</span>
                 </label>
                 <input
@@ -295,15 +415,15 @@ export const QuickLogWidget = ({
                   max="360"
                   value={exerciseDuration}
                   onChange={(e) => setExerciseDuration(e.target.value)}
-                  className="w-full bg-emerald-50/40 border border-emerald-200/80 rounded-xl px-3.5 py-2.5 text-sm sm:text-base text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[38px]"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Calories Burnt (kcal) *</span>
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5 flex items-center gap-1">
+                  <Flame className="w-3 h-3 text-emerald-600" />
+                  <span>Calories (kcal) *</span>
                 </label>
                 <input
                   type="number"
@@ -311,18 +431,18 @@ export const QuickLogWidget = ({
                   max="2500"
                   value={exerciseCalories}
                   onChange={(e) => setExerciseCalories(e.target.value)}
-                  className="w-full bg-emerald-50/40 border border-emerald-200/80 rounded-xl px-3.5 py-2.5 text-sm sm:text-base text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[38px]"
                   required
                 />
               </div>
             </div>
 
             {/* Heart Rate & Zone */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  <Heart className="w-3.5 h-3.5 text-rose-500" />
-                  <span>Avg Heart Rate (bpm)</span>
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5 flex items-center gap-1">
+                  <Heart className="w-3 h-3 text-rose-500" />
+                  <span>Avg Heart Rate</span>
                 </label>
                 <input
                   type="number"
@@ -330,32 +450,32 @@ export const QuickLogWidget = ({
                   max="220"
                   value={exerciseHeartRate}
                   onChange={(e) => setExerciseHeartRate(e.target.value)}
-                  className="w-full bg-emerald-50/40 border border-emerald-200/80 rounded-xl px-3.5 py-2.5 text-sm sm:text-base text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[38px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">
-                  Heart Rate Zone Recorded
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
+                  Heart Rate Zone
                 </label>
                 <select
                   value={exerciseZone}
                   onChange={(e) => setExerciseZone(e.target.value as HRZone)}
-                  className="w-full bg-emerald-50/40 border border-emerald-200/80 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900 focus:outline-emerald-500 focus:bg-white min-h-[38px]"
                 >
-                  <option value="Zone 1 Recovery">Zone 1 Recovery (&lt;115 bpm)</option>
-                  <option value="Zone 2 Aerobic">Zone 2 Aerobic (115-135 bpm)</option>
-                  <option value="Zone 3 Cardio">Zone 3 Cardio (135-155 bpm)</option>
-                  <option value="Zone 4 Threshold">Zone 4 Threshold (155-170 bpm)</option>
-                  <option value="Zone 5 Peak">Zone 5 Peak (&gt;170 bpm)</option>
+                  <option value="Zone 1 Recovery">Zone 1 (&lt;115 bpm)</option>
+                  <option value="Zone 2 Aerobic">Zone 2 (115-135 bpm)</option>
+                  <option value="Zone 3 Cardio">Zone 3 (135-155 bpm)</option>
+                  <option value="Zone 4 Threshold">Zone 4 (155-170 bpm)</option>
+                  <option value="Zone 5 Peak">Zone 5 (&gt;170 bpm)</option>
                 </select>
               </div>
             </div>
 
             {/* Target Body Focus */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">
-                Exercise Focus / Muscle Group
+              <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
+                Focus / Muscle Group
               </label>
               <div className="grid grid-cols-3 gap-1.5 text-xs">
                 {(['full-body', 'lower-body', 'cardio-engine'] as const).map((part) => (
@@ -363,10 +483,10 @@ export const QuickLogWidget = ({
                     key={part}
                     type="button"
                     onClick={() => setExerciseBodyPart(part)}
-                    className={`py-2 px-1 rounded-xl font-bold border transition-all touch-manipulation capitalize ${
+                    className={`py-1.5 px-1 rounded-lg font-bold border transition-all touch-manipulation capitalize cursor-pointer ${
                       exerciseBodyPart === part
                         ? 'bg-emerald-100 text-emerald-950 border-emerald-300'
-                        : 'bg-emerald-50/40 text-slate-600 border-emerald-100'
+                        : 'bg-slate-50 text-slate-600 border-slate-200'
                     }`}
                   >
                     {part.replace('-', ' ')}
@@ -379,29 +499,29 @@ export const QuickLogWidget = ({
             <button
               id="submit-exercise-log-btn"
               type="submit"
-              className="btn w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm sm:text-base py-3.5 px-4 rounded-2xl shadow-sm transition-all -translate-y-0.5 flex items-center justify-center gap-2 min-h-[48px] touch-manipulation"
+              className="btn w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm py-2.5 px-4 rounded-xl shadow-xs transition-all -translate-y-0.5 flex items-center justify-center gap-1.5 min-h-[42px] touch-manipulation cursor-pointer"
             >
-              <Check className="w-5 h-5" />
-              <span>Record Workout & Update Burnt Calories</span>
+              <Check className="w-4 h-4" />
+              <span>Record Workout</span>
             </button>
           </form>
         ) : (
           /* MODE 2: FOOD INPUT FORM */
-          <form onSubmit={handleSaveFood} className="space-y-3.5">
+          <form onSubmit={handleSaveFood} className="space-y-3">
             {/* Quick Presets */}
             <div>
-              <span className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5">
-                Quick Tap Local Food Presets:
+              <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                Quick Local Presets:
               </span>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1">
                 {foodPresets.map((f, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => handleFoodPreset(f)}
-                    className="text-[11px] font-bold bg-amber-50 border border-amber-200 text-amber-900 px-2.5 py-1.5 rounded-xl hover:bg-amber-100 transition-colors touch-manipulation"
+                    className="text-[10px] font-bold bg-amber-50 border border-amber-200/80 text-amber-900 px-2 py-1 rounded-lg hover:bg-amber-100 transition-colors touch-manipulation cursor-pointer"
                   >
-                    {f.name} ({f.cal} kcal)
+                    {f.name} ({f.cal}k)
                   </button>
                 ))}
               </div>
@@ -409,29 +529,29 @@ export const QuickLogWidget = ({
 
             {/* Food Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">
-                Food or Drink Name *
+              <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
+                Food / Drink Name *
               </label>
               <input
                 type="text"
                 value={foodName}
                 onChange={(e) => setFoodName(e.target.value)}
-                placeholder="e.g. Kaya butter toast, ice coffee, prawn noodle, chicken rice"
-                className="w-full bg-amber-50/40 border border-amber-200/80 rounded-xl px-3.5 py-2.5 text-sm sm:text-base text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[44px]"
+                placeholder="e.g. Chicken rice, fish soup, toast"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[38px]"
                 required
               />
             </div>
 
             {/* Meal Type & Calories */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">
-                  Meal Category *
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
+                  Meal *
                 </label>
                 <select
                   value={foodMealType}
                   onChange={(e) => setFoodMealType(e.target.value as MealType)}
-                  className="w-full bg-amber-50/40 border border-amber-200/80 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[38px]"
                 >
                   <option value="breakfast">Breakfast</option>
                   <option value="lunch">Lunch</option>
@@ -442,9 +562,9 @@ export const QuickLogWidget = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Calories Estimate (kcal) *</span>
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5 flex items-center gap-1">
+                  <Flame className="w-3 h-3 text-amber-600" />
+                  <span>Calories (kcal) *</span>
                 </label>
                 <input
                   type="number"
@@ -452,39 +572,39 @@ export const QuickLogWidget = ({
                   max="3000"
                   value={foodCalories}
                   onChange={(e) => setFoodCalories(e.target.value)}
-                  className="w-full bg-amber-50/40 border border-amber-200/80 rounded-xl px-3.5 py-2.5 text-sm sm:text-base text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[38px]"
                   required
                 />
               </div>
             </div>
 
             {/* Sugar Level & Healthier Choice */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">
+                <label className="block text-[11px] font-bold text-slate-700 mb-0.5">
                   Sugar Rating
                 </label>
                 <select
                   value={foodSugarLevel}
                   onChange={(e) => setFoodSugarLevel(e.target.value as any)}
-                  className="w-full bg-amber-50/40 border border-amber-200/80 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[44px]"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900 focus:outline-amber-500 focus:bg-white min-h-[38px]"
                 >
                   <option value="No Sugar">Grade A (No Sugar)</option>
                   <option value="Low Sugar">Grade B (Low Sugar)</option>
-                  <option value="Medium">Grade C (Medium Sugar)</option>
+                  <option value="Medium">Grade C (Medium)</option>
                   <option value="High">Grade D (High Sugar)</option>
                 </select>
               </div>
 
               <div className="flex items-end">
-                <label className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3.5 py-2.5 w-full cursor-pointer min-h-[44px]">
+                <label className="flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 rounded-xl px-2.5 py-1.5 w-full cursor-pointer min-h-[38px]">
                   <input
                     type="checkbox"
                     checked={isHealthierChoice}
                     onChange={(e) => setIsHealthierChoice(e.target.checked)}
                     className="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500"
                   />
-                  <span className="text-xs font-bold text-emerald-950">
+                  <span className="text-[11px] font-bold text-emerald-950">
                     Healthier Choice
                   </span>
                 </label>
@@ -493,17 +613,17 @@ export const QuickLogWidget = ({
 
             {/* Macros Estimate (Protein, Carbs, Fat) */}
             <div>
-              <span className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1">
-                Estimated Macros (Grams):
+              <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">
+                Estimated Macros:
               </span>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1.5">
                 <div>
                   <label className="block text-[10px] text-slate-600 font-bold">Protein (g)</label>
                   <input
                     type="number"
                     value={foodProtein}
                     onChange={(e) => setFoodProtein(e.target.value)}
-                    className="w-full bg-emerald-50/40 border border-emerald-200/80 rounded-lg px-2 py-1.5 text-xs text-slate-900"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-900"
                   />
                 </div>
                 <div>
@@ -512,7 +632,7 @@ export const QuickLogWidget = ({
                     type="number"
                     value={foodCarbs}
                     onChange={(e) => setFoodCarbs(e.target.value)}
-                    className="w-full bg-blue-50/40 border border-blue-200/80 rounded-lg px-2 py-1.5 text-xs text-slate-900"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-900"
                   />
                 </div>
                 <div>
@@ -521,7 +641,7 @@ export const QuickLogWidget = ({
                     type="number"
                     value={foodFat}
                     onChange={(e) => setFoodFat(e.target.value)}
-                    className="w-full bg-rose-50/40 border border-rose-200/80 rounded-lg px-2 py-1.5 text-xs text-slate-900"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-900"
                   />
                 </div>
               </div>
@@ -531,10 +651,10 @@ export const QuickLogWidget = ({
             <button
               id="submit-food-log-btn"
               type="submit"
-              className="btn w-full bg-amber-500 hover:bg-amber-600 text-white font-black text-sm sm:text-base py-3.5 px-4 rounded-2xl shadow-sm transition-all -translate-y-0.5 flex items-center justify-center gap-2 min-h-[48px] touch-manipulation"
+              className="btn w-full bg-amber-500 hover:bg-amber-600 text-white font-black text-xs sm:text-sm py-2.5 px-4 rounded-xl shadow-xs transition-all -translate-y-0.5 flex items-center justify-center gap-1.5 min-h-[42px] touch-manipulation cursor-pointer"
             >
-              <Check className="w-5 h-5" />
-              <span>Record Meal & Update Calorie Intake</span>
+              <Check className="w-4 h-4" />
+              <span>Record Meal</span>
             </button>
           </form>
         )}

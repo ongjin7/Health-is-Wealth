@@ -251,6 +251,7 @@ export default function App() {
         isOpen={isQuickLogOpen}
         activeMode={quickLogMode}
         onClose={() => setIsQuickLogOpen(false)}
+        onOpen={handleOpenQuickLog}
         onAddExercise={handleAddExercise}
         onAddFood={handleAddFood}
         onSwitchMode={setQuickLogMode}

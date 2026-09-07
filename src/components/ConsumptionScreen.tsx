@@ -93,14 +93,12 @@ export const ConsumptionScreen = ({
             <Utensils className="w-6 h-6 text-emerald-600" />
             <span>Food Consumption Tracking</span>
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Track local Singapore meals, calories, sugar, and healthier choices
-          </p>
         </div>
         <button
+          id="consumption-key-in-food-btn"
           type="button"
           onClick={() => onOpenQuickLog('food')}
-          className="btn bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm hover:bg-emerald-600 transition-all -translate-y-0.5 flex items-center gap-1.5 touch-manipulation shrink-0"
+          className="btn bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm hover:bg-emerald-600 transition-all -translate-y-0.5 flex items-center gap-1.5 touch-manipulation shrink-0 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Key In Food</span>
@@ -169,63 +167,6 @@ export const ConsumptionScreen = ({
           <span className="block text-[10px] text-rose-800 font-medium">Lipids</span>
         </div>
       </div>
-
-      {/* Consumption Habit Insights & Recommendations (Required by prompt) */}
-      <section 
-        id="consumption-insights-section"
-        className="space-y-3"
-      >
-        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-700">
-          <Sparkles className="w-4 h-4 text-emerald-600" />
-          <span>Consumption Habit Recommendations & Insights</span>
-        </div>
-
-        {CONSUMPTION_RECOMMENDATIONS.map((rec, idx) => (
-          <div
-            key={idx}
-            className={`rounded-[24px] p-4 sm:p-5 border shadow-xs ${
-              rec.type === 'alert'
-                ? 'bg-amber-50/90 border-amber-200 text-amber-950'
-                : rec.type === 'tip'
-                ? 'bg-emerald-50/90 border-emerald-200 text-emerald-950'
-                : 'bg-blue-50/90 border-blue-200 text-blue-950'
-            }`}
-          >
-            <div className="flex items-start gap-3">
-              {rec.type === 'alert' ? (
-                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
-                  <AlertCircle className="w-4 h-4" />
-                </div>
-              ) : rec.type === 'tip' ? (
-                <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-              ) : (
-                <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
-                  <Info className="w-4 h-4" />
-                </div>
-              )}
-              <div className="space-y-1 w-full">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-black text-sm sm:text-base leading-snug">
-                    {rec.title}
-                  </h3>
-                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-white/90 border border-slate-200/80">
-                    {rec.highlightStat}
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                  {rec.message}
-                </p>
-                <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-bold text-slate-900">
-                  <span className="text-emerald-700">Healthier Choice Switch:</span>
-                  <span>{rec.actionPrompt}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
 
       {/* Detailed Food Consumption Log List */}
       <section 
@@ -322,6 +263,63 @@ export const ConsumptionScreen = ({
             ))
           )}
         </div>
+      </section>
+
+      {/* Consumption Habit Insights & Recommendations (Required by prompt) */}
+      <section 
+        id="consumption-insights-section"
+        className="space-y-3"
+      >
+        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-700">
+          <Sparkles className="w-4 h-4 text-emerald-600" />
+          <span>Consumption Habit Recommendations & Insights</span>
+        </div>
+
+        {CONSUMPTION_RECOMMENDATIONS.map((rec, idx) => (
+          <div
+            key={idx}
+            className={`rounded-[24px] p-4 sm:p-5 border shadow-xs ${
+              rec.type === 'alert'
+                ? 'bg-amber-50/90 border-amber-200 text-amber-950'
+                : rec.type === 'tip'
+                ? 'bg-emerald-50/90 border-emerald-200 text-emerald-950'
+                : 'bg-blue-50/90 border-blue-200 text-blue-950'
+            }`}
+          >
+            <div className="flex items-start gap-3">
+              {rec.type === 'alert' ? (
+                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
+                  <AlertCircle className="w-4 h-4" />
+                </div>
+              ) : rec.type === 'tip' ? (
+                <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+              ) : (
+                <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
+                  <Info className="w-4 h-4" />
+                </div>
+              )}
+              <div className="space-y-1 w-full">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="font-black text-sm sm:text-base leading-snug">
+                    {rec.title}
+                  </h3>
+                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-white/90 border border-slate-200/80">
+                    {rec.highlightStat}
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                  {rec.message}
+                </p>
+                <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-bold text-slate-900">
+                  <span className="text-emerald-700">Healthier Choice Switch:</span>
+                  <span>{rec.actionPrompt}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </section>
 
       {/* Recommended Nearby Healthier Choice Food Options (Required by prompt) */}

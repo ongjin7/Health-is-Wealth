@@ -40,9 +40,8 @@ export const GamificationHub = ({
   pointHistory,
   onCheerUser,
 }: GamificationHubProps) => {
-  const [activeTab, setActiveTab] = useState<'badges' | 'leaderboard' | 'points'>('badges');
+  const [activeTab, setActiveTab] = useState<'badges' | 'leaderboard' | 'points'>('leaderboard');
   const [selectedBadge, setSelectedBadge] = useState<MilestoneBadge | null>(null);
-  const [leaderboardFilter, setLeaderboardFilter] = useState<'friends' | 'all'>('friends');
   const [badgeCategoryFilter, setBadgeCategoryFilter] = useState<'all' | 'unlocked' | 'progress'>('all');
 
   // Calculate Level & Progress
@@ -328,44 +327,14 @@ export const GamificationHub = ({
         </div>
       )}
 
-      {/* TAB 2: HYPOTHETICAL FRIENDS LEADERBOARD */}
+      {/* TAB 2: FRIENDS LEADERBOARD */}
       {activeTab === 'leaderboard' && (
         <div className="card bg-white rounded-[28px] border border-emerald-100 p-5 sm:p-6 shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-100 pb-3">
-            <div>
-              <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
-                <Users className="w-5 h-5 text-emerald-600" />
-                <span>Connected Friends & Community Leaderboard</span>
-              </h4>
-              <p className="text-xs text-slate-500 font-medium">
-                Hypothetical peers sharing health goals in Singapore (Weekly Season 36: Sengkang & Punggol)
-              </p>
-            </div>
-
-            <div className="flex items-center gap-1.5 bg-emerald-50/80 p-1 rounded-xl border border-emerald-100/80">
-              <button
-                type="button"
-                onClick={() => setLeaderboardFilter('friends')}
-                className={`text-xs font-bold px-3 py-1 rounded-lg transition-all ${
-                  leaderboardFilter === 'friends'
-                    ? 'bg-emerald-500 text-white font-black shadow-xs'
-                    : 'text-emerald-800 hover:text-emerald-950'
-                }`}
-              >
-                Friends Circle (6)
-              </button>
-              <button
-                type="button"
-                onClick={() => setLeaderboardFilter('all')}
-                className={`text-xs font-bold px-3 py-1 rounded-lg transition-all ${
-                  leaderboardFilter === 'all'
-                    ? 'bg-emerald-500 text-white font-black shadow-xs'
-                    : 'text-emerald-800 hover:text-emerald-950'
-                }`}
-              >
-                All Singapore
-              </button>
-            </div>
+          <div className="border-b border-emerald-100 pb-3">
+            <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
+              <Users className="w-5 h-5 text-emerald-600" />
+              <span>Connected Friends & Community Leaderboard</span>
+            </h4>
           </div>
 
           {/* User Status Highlight Banner */}

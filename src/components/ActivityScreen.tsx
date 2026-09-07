@@ -72,107 +72,67 @@ export const ActivityScreen = ({
             <Activity className="w-6 h-6 text-emerald-600" />
             <span>Exercise & Activity Deep Dive</span>
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Workouts logged via tracker or manually keyed in ({filteredExercises.length} in this period)
-          </p>
         </div>
         <button
+          id="activity-key-in-exercise-btn"
           type="button"
           onClick={() => onOpenQuickLog('exercise')}
-          className="btn bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm hover:bg-emerald-600 transition-all -translate-y-0.5 flex items-center gap-1.5 touch-manipulation shrink-0"
+          className="btn bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm hover:bg-emerald-600 transition-all -translate-y-0.5 flex items-center gap-1.5 touch-manipulation shrink-0 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
-          <span>Key In Workout</span>
+          <span>Key In Exercise</span>
         </button>
       </div>
 
       {/* High-level Aggregate Metrics Bar matching Vibrant Palette cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="bg-emerald-50 border border-emerald-100 rounded-3xl p-4 text-center shadow-xs">
-          <div className="flex items-center justify-center gap-1 text-xs text-emerald-600 font-black uppercase mb-1">
-            <Flame className="w-3.5 h-3.5 text-emerald-600 fill-emerald-500" />
-            <span>Active Burnt</span>
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-emerald-700">
-            {totalCalories.toLocaleString()} <span className="text-xs font-normal">kcal</span>
-          </div>
-          <div className="text-[11px] text-emerald-800 font-bold mt-1">Total calories expended</div>
-        </div>
-
-        <div className="bg-amber-50 border border-amber-100 rounded-3xl p-4 text-center shadow-xs">
-          <div className="flex items-center justify-center gap-1 text-xs text-amber-600 font-black uppercase mb-1">
-            <Timer className="w-3.5 h-3.5 text-amber-600" />
-            <span>Active Time</span>
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-amber-700">
-            {totalMins} <span className="text-xs font-normal">mins</span>
-          </div>
-          <div className="text-[11px] text-amber-800 font-bold mt-1">Exercise duration</div>
-        </div>
-
-        <div className="bg-blue-50 border border-blue-100 rounded-3xl p-4 text-center shadow-xs">
-          <div className="flex items-center justify-center gap-1 text-xs text-blue-600 font-black uppercase mb-1">
-            <Heart className="w-3.5 h-3.5 text-blue-600" />
-            <span>Avg Workout HR</span>
-          </div>
-          <div className="text-2xl sm:text-3xl font-black text-blue-700">
-            {avgHeartRate} <span className="text-xs font-normal">bpm</span>
-          </div>
-          <div className="text-[11px] text-blue-800 font-bold mt-1">Aerobic pulse average</div>
-        </div>
-      </div>
-
-      {/* Activity Level Recommendations (Required by prompt) */}
-      <section 
-        id="activity-recommendations-section"
-        className="space-y-3"
-      >
-        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-700">
-          <Sparkles className="w-4 h-4 text-amber-500" />
-          <span>Activity Level Recommendations & Insights</span>
-        </div>
-
-        {ACTIVITY_RECOMMENDATIONS.map((rec, idx) => (
-          <div
-            key={idx}
-            className={`rounded-[24px] p-4 sm:p-5 border shadow-xs ${
-              rec.type === 'warning'
-                ? 'bg-amber-50/90 border-amber-200 text-amber-950'
-                : rec.type === 'suggestion'
-                ? 'bg-blue-50/90 border-blue-200 text-blue-950'
-                : 'bg-emerald-50/90 border-emerald-200 text-emerald-950'
-            }`}
-          >
-            <div className="flex items-start gap-3">
-              {rec.type === 'warning' ? (
-                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
-                  <AlertTriangle className="w-4 h-4" />
-                </div>
-              ) : rec.type === 'suggestion' ? (
-                <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
-                  <Info className="w-4 h-4" />
-                </div>
-              ) : (
-                <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
-                  <Zap className="w-4 h-4" />
-                </div>
-              )}
-              <div className="space-y-1 flex-1">
-                <h3 className="font-black text-sm sm:text-base leading-snug">
-                  {rec.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                  {rec.message}
-                </p>
-                <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-bold text-slate-900">
-                  <span className="text-emerald-700">Recommended Next Step:</span>
-                  <span>{rec.actionPrompt}</span>
-                </div>
-              </div>
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        <div className="bg-emerald-50 border border-emerald-100 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 text-center shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-center gap-1 text-[11px] sm:text-xs text-emerald-600 font-black uppercase mb-1 min-w-0">
+              <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 fill-emerald-500 shrink-0" />
+              <span className="truncate">Active Burnt</span>
+            </div>
+            <div className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-emerald-700 leading-tight">
+              {totalCalories.toLocaleString()} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal">kcal</span>
             </div>
           </div>
-        ))}
-      </section>
+          <div className="text-[9px] min-[400px]:text-[10px] sm:text-[11px] text-emerald-800 font-bold mt-1 leading-tight">
+            <span className="hidden sm:inline">Total calories expended</span>
+            <span className="sm:hidden">Total calories</span>
+          </div>
+        </div>
+
+        <div className="bg-amber-50 border border-amber-100 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 text-center shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-center gap-1 text-[11px] sm:text-xs text-amber-600 font-black uppercase mb-1 min-w-0">
+              <Timer className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-600 shrink-0" />
+              <span className="truncate">Active Time</span>
+            </div>
+            <div className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-amber-700 leading-tight">
+              {totalMins} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal">mins</span>
+            </div>
+          </div>
+          <div className="text-[9px] min-[400px]:text-[10px] sm:text-[11px] text-amber-800 font-bold mt-1 leading-tight">
+            Exercise duration
+          </div>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 text-center shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-center gap-1 text-[11px] sm:text-xs text-blue-600 font-black uppercase mb-1 min-w-0">
+              <Heart className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-600 shrink-0" />
+              <span className="truncate">Avg Workout HR</span>
+            </div>
+            <div className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-blue-700 leading-tight">
+              {avgHeartRate} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal">bpm</span>
+            </div>
+          </div>
+          <div className="text-[9px] min-[400px]:text-[10px] sm:text-[11px] text-blue-800 font-bold mt-1 leading-tight">
+            <span className="hidden sm:inline">Aerobic pulse average</span>
+            <span className="sm:hidden">Pulse average</span>
+          </div>
+        </div>
+      </div>
 
       {/* Detailed Exercise Log Table / List */}
       <section 
@@ -264,6 +224,58 @@ export const ActivityScreen = ({
             ))
           )}
         </div>
+      </section>
+
+      {/* Activity Level Recommendations (Required by prompt) */}
+      <section 
+        id="activity-recommendations-section"
+        className="space-y-3"
+      >
+        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-700">
+          <Sparkles className="w-4 h-4 text-amber-500" />
+          <span>Activity Level Recommendations & Insights</span>
+        </div>
+
+        {ACTIVITY_RECOMMENDATIONS.map((rec, idx) => (
+          <div
+            key={idx}
+            className={`rounded-[24px] p-4 sm:p-5 border shadow-xs ${
+              rec.type === 'warning'
+                ? 'bg-amber-50/90 border-amber-200 text-amber-950'
+                : rec.type === 'suggestion'
+                ? 'bg-blue-50/90 border-blue-200 text-blue-950'
+                : 'bg-emerald-50/90 border-emerald-200 text-emerald-950'
+            }`}
+          >
+            <div className="flex items-start gap-3">
+              {rec.type === 'warning' ? (
+                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
+              ) : rec.type === 'suggestion' ? (
+                <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
+                  <Info className="w-4 h-4" />
+                </div>
+              ) : (
+                <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+                  <Zap className="w-4 h-4" />
+                </div>
+              )}
+              <div className="space-y-1 flex-1">
+                <h3 className="font-black text-sm sm:text-base leading-snug">
+                  {rec.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                  {rec.message}
+                </p>
+                <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-bold text-slate-900">
+                  <span className="text-emerald-700">Recommended Next Step:</span>
+                  <span>{rec.actionPrompt}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </section>
 
       {/* Recommended Nearby Physical Activity Locations (Required by prompt) */}

@@ -107,8 +107,8 @@ export const DashboardScreen = ({
       >
         <div className="flex items-center justify-between gap-2 mb-4">
           <div>
-            <h2 className="text-xl font-black text-slate-800 tracking-tight uppercase">
-              DASHBOARD SUMMARY
+            <h2 className="text-xl font-black text-slate-800 tracking-tight">
+              Summary
             </h2>
             <p className="text-xs text-slate-500 font-medium">
               Comparing your energy intake vs. physical burn for {timeRange}
@@ -138,51 +138,51 @@ export const DashboardScreen = ({
           </div>
         </div>
 
-        {/* 3 High-contrast metric cards matching Vibrant Palette */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-3">
+        {/* 3 High-contrast metric cards side-by-side on iPhone 15 Pro Max and desktop */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 my-3">
           {/* Burnt */}
-          <div className="bg-emerald-50 p-4 rounded-3xl border border-emerald-100 flex flex-col justify-between">
+          <div className="bg-emerald-50 p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-emerald-100 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between text-xs font-black text-emerald-600 uppercase mb-1">
-                <div className="flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-emerald-600 fill-emerald-500" />
-                  <span>Burnt</span>
+                <div className="flex items-center gap-1 min-w-0">
+                  <Flame className="w-3.5 h-3.5 text-emerald-600 fill-emerald-500 shrink-0" />
+                  <span className="truncate">Burnt</span>
                 </div>
-                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">Active</span>
+                <span className="hidden min-[410px]:inline-block text-[9px] font-bold text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded-full shrink-0">Active</span>
               </div>
-              <p className="text-3xl font-black text-emerald-700 tracking-tight">
-                {totalCaloriesBurnt.toLocaleString()} <span className="text-sm font-normal text-emerald-600">kcal</span>
+              <p className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-emerald-700 tracking-tight leading-tight">
+                {totalCaloriesBurnt.toLocaleString()} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal text-emerald-600">kcal</span>
               </p>
             </div>
             <div>
-              <div className="mt-3 h-2 w-full bg-emerald-200 rounded-full overflow-hidden">
+              <div className="mt-2 sm:mt-3 h-1.5 sm:h-2 w-full bg-emerald-200 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                   style={{ width: `${burnProgressPercent}%` }}
                 />
               </div>
-              <p className="text-[11px] mt-1.5 font-bold text-emerald-800">
-                {burnProgressPercent}% of {rangeAdjective} target ({burnTarget.toLocaleString()} kcal)
+              <p className="text-[10px] sm:text-[11px] mt-1 sm:mt-1.5 font-bold text-emerald-800 leading-tight">
+                {burnProgressPercent}% of {burnTarget.toLocaleString()} kcal
               </p>
             </div>
           </div>
 
           {/* Intake */}
-          <div className="bg-amber-50 p-4 rounded-3xl border border-amber-100 flex flex-col justify-between">
+          <div className="bg-amber-50 p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-amber-100 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between text-xs font-black text-amber-600 uppercase mb-1">
-                <div className="flex items-center gap-1">
-                  <Utensils className="w-3.5 h-3.5 text-amber-600" />
-                  <span>Intake</span>
+                <div className="flex items-center gap-1 min-w-0">
+                  <Utensils className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <span className="truncate">Intake</span>
                 </div>
-                <span className="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-full">Budget</span>
+                <span className="hidden min-[410px]:inline-block text-[9px] font-bold text-amber-700 bg-amber-100/80 px-1.5 py-0.5 rounded-full shrink-0">Budget</span>
               </div>
-              <p className="text-3xl font-black text-amber-700 tracking-tight">
-                {totalCaloriesIntake.toLocaleString()} <span className="text-sm font-normal text-amber-600">kcal</span>
+              <p className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-amber-700 tracking-tight leading-tight">
+                {totalCaloriesIntake.toLocaleString()} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal text-amber-600">kcal</span>
               </p>
             </div>
             <div>
-              <div className="mt-3 h-2 w-full bg-amber-200 rounded-full overflow-hidden">
+              <div className="mt-2 sm:mt-3 h-1.5 sm:h-2 w-full bg-amber-200 rounded-full overflow-hidden">
                 <div 
                   className={`h-full rounded-full transition-all duration-300 ${
                     totalCaloriesIntake <= intakeBudget ? 'bg-amber-500' : 'bg-rose-500'
@@ -190,35 +190,35 @@ export const DashboardScreen = ({
                   style={{ width: `${intakeUsagePercent}%` }}
                 />
               </div>
-              <p className="text-[11px] mt-1.5 font-bold text-amber-800">
-                Goal: &lt; {intakeBudget.toLocaleString()} kcal ({intakeUsagePercent}% used)
+              <p className="text-[10px] sm:text-[11px] mt-1 sm:mt-1.5 font-bold text-amber-800 leading-tight">
+                Goal: &lt; {intakeBudget.toLocaleString()} kcal ({intakeUsagePercent}%)
               </p>
             </div>
           </div>
 
           {/* Active / Net */}
-          <div className="bg-blue-50 p-4 rounded-3xl border border-blue-100 flex flex-col justify-between">
+          <div className="bg-blue-50 p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-blue-100 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between text-xs font-black text-blue-600 uppercase mb-1">
-                <div className="flex items-center gap-1">
-                  <Timer className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Active & Net</span>
+                <div className="flex items-center gap-1 min-w-0">
+                  <Timer className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span className="truncate">Active & Net</span>
                 </div>
-                <span className="text-[10px] font-bold text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-full">Duration</span>
+                <span className="hidden min-[410px]:inline-block text-[9px] font-bold text-blue-700 bg-blue-100/80 px-1.5 py-0.5 rounded-full shrink-0">Time</span>
               </div>
-              <p className="text-3xl font-black text-blue-700 tracking-tight">
-                {totalDurationMin} <span className="text-sm font-normal text-blue-600">mins</span>
+              <p className="text-base min-[400px]:text-xl sm:text-2xl lg:text-3xl font-black text-blue-700 tracking-tight leading-tight">
+                {totalDurationMin} <span className="text-[10px] min-[400px]:text-xs sm:text-sm font-normal text-blue-600">mins</span>
               </p>
             </div>
             <div>
-              <div className="mt-3 h-2 w-full bg-blue-200 rounded-full overflow-hidden">
+              <div className="mt-2 sm:mt-3 h-1.5 sm:h-2 w-full bg-blue-200 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-blue-500 rounded-full transition-all duration-300"
                   style={{ width: `${Math.min(100, Math.round((totalDurationMin / durationTarget) * 100))}%` }}
                 />
               </div>
-              <p className="text-[11px] mt-1.5 font-bold text-blue-800">
-                {Math.min(100, Math.round((totalDurationMin / durationTarget) * 100))}% of {durationTarget}m goal • Net: {netCalories > 0 ? `+${netCalories.toLocaleString()}` : netCalories.toLocaleString()} kcal
+              <p className="text-[10px] sm:text-[11px] mt-1 sm:mt-1.5 font-bold text-blue-800 leading-tight">
+                {Math.min(100, Math.round((totalDurationMin / durationTarget) * 100))}% • Net: {netCalories > 0 ? `+${netCalories.toLocaleString()}` : netCalories.toLocaleString()} kcal
               </p>
             </div>
           </div>
@@ -307,18 +307,6 @@ export const DashboardScreen = ({
         </div>
       </section>
 
-      {/* Gamified Health Rewards, Point System, Milestone Badges & Friends Leaderboard */}
-      <GamificationHub
-        totalPoints={totalPoints}
-        streakDays={streakDays}
-        goal={goal}
-        badges={badges}
-        leaderboardUsers={leaderboardUsers}
-        pointRules={pointRules}
-        pointHistory={pointHistory}
-        onCheerUser={onCheerUser}
-      />
-
       {/* Screen 2 & Screen 3 Deep Dive Shortcuts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {/* Activity shortcut */}
@@ -382,23 +370,37 @@ export const DashboardScreen = ({
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
           <button
+            id="dashboard-key-in-exercise-btn"
             type="button"
             onClick={() => onOpenQuickLog('exercise')}
-            className="btn flex-1 sm:flex-initial bg-white text-emerald-800 text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-xs hover:bg-emerald-50 transition-all -translate-y-0.5 touch-manipulation flex items-center justify-center gap-1.5"
+            className="btn flex-1 sm:flex-initial bg-white text-emerald-800 text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-xs hover:bg-emerald-50 transition-all -translate-y-0.5 touch-manipulation flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Exercise</span>
+            <span>Key In Exercise</span>
           </button>
           <button
+            id="dashboard-key-in-food-btn"
             type="button"
             onClick={() => onOpenQuickLog('food')}
-            className="btn flex-1 sm:flex-initial bg-amber-500 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-xs hover:bg-amber-600 transition-all -translate-y-0.5 touch-manipulation flex items-center justify-center gap-1.5"
+            className="btn flex-1 sm:flex-initial bg-amber-500 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-xs hover:bg-amber-600 transition-all -translate-y-0.5 touch-manipulation flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Food</span>
+            <span>Key In Food</span>
           </button>
         </div>
       </div>
+
+      {/* Gamified Health Rewards, Point System, Milestone Badges & Friends Leaderboard */}
+      <GamificationHub
+        totalPoints={totalPoints}
+        streakDays={streakDays}
+        goal={goal}
+        badges={badges}
+        leaderboardUsers={leaderboardUsers}
+        pointRules={pointRules}
+        pointHistory={pointHistory}
+        onCheerUser={onCheerUser}
+      />
     </div>
   );
 };

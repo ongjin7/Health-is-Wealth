@@ -1,4 +1,4 @@
-import { Flame, Heart, Target, MapPin, Sparkles } from 'lucide-react';
+import { Flame, Target, Sparkles } from 'lucide-react';
 import { PersonalGoal } from '../types';
 import { ScreenId } from './Navigation';
 import cuteLogo from '../assets/images/cute_health_logo_1788763096544.jpg';
@@ -22,7 +22,7 @@ export const Header = ({
     <header className="bg-white text-slate-800 border-b border-emerald-100 sticky top-0 z-30 shadow-xs">
       <div className="max-w-5xl mx-auto px-4 py-3 sm:py-3.5">
         <div className="flex items-center justify-between gap-3">
-          {/* Brand & Location with Cuter, Playful Mascot Logo */}
+          {/* Brand & Mascot Logo */}
           <div className="flex items-center gap-2.5 sm:gap-3">
             <div 
               id="app-logo"
@@ -48,10 +48,6 @@ export const Header = ({
                 <h1 className="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight leading-none">
                   HEALTH <span className="text-amber-500">IS</span> WEALTH
                 </h1>
-              </div>
-              <div className="flex items-center gap-1 text-xs text-emerald-600 font-bold mt-0.5">
-                <MapPin className="w-3 h-3 text-emerald-500" />
-                <span>Sengkang West, Singapore</span>
               </div>
             </div>
           </div>
@@ -145,23 +141,6 @@ export const Header = ({
                 WX
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Goal ticker banner */}
-        <div className="mt-2.5 pt-2 border-t border-emerald-100/80 flex flex-wrap items-center justify-between gap-2 text-xs bg-emerald-50/50 px-3 py-1.5 rounded-xl">
-          <div className="flex items-center gap-2 text-slate-700 font-medium">
-            <span className="px-2 py-0.5 rounded-md bg-emerald-500 text-white font-black uppercase text-[10px] tracking-wider shadow-2xs">
-              Goal
-            </span>
-            <span className="truncate max-w-[210px] sm:max-w-none text-slate-800 font-bold">
-              {goal.title}
-            </span>
-          </div>
-          <div className="text-emerald-700 font-extrabold flex items-center gap-1.5">
-            <span>{(goal.startValue - goal.currentValue).toFixed(1)}kg lost</span>
-            <span className="text-emerald-300">•</span>
-            <span className="text-slate-600 font-medium">{(goal.currentValue - goal.targetValue).toFixed(1)}kg to go</span>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Calendar, ChevronRight } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { TimeRange } from '../types';
 
 interface TimeFilterBarProps {
@@ -21,14 +21,9 @@ export const TimeFilterBar = ({
 
   return (
     <div className="bg-white rounded-[24px] border border-emerald-100 p-3 shadow-xs mb-4">
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <div className="flex items-center gap-2 text-slate-800 font-bold text-xs sm:text-sm">
-          <Calendar className="w-4 h-4 text-emerald-500 shrink-0" />
-          <span className="truncate">{dateLabel}</span>
-        </div>
-        <span className="text-[10px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-          Filter View
-        </span>
+      <div className="flex items-center gap-2 text-slate-800 font-bold text-xs sm:text-sm mb-2">
+        <Calendar className="w-4 h-4 text-emerald-500 shrink-0" />
+        <span className="truncate">{dateLabel}</span>
       </div>
 
       <div 
