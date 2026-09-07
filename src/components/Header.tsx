@@ -105,11 +105,16 @@ export const Header = ({
                   document.getElementById('gamification-hub')?.scrollIntoView({ behavior: 'smooth' });
                 }, 80);
               }}
-              className="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 px-2.5 py-1.5 rounded-xl text-amber-800 text-xs sm:text-sm font-bold shadow-2xs cursor-pointer transition-all active:scale-95 touch-manipulation"
+              className="group flex items-center gap-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:brightness-105 text-white px-2.5 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-black shadow-xs shadow-orange-500/25 cursor-pointer transition-all active:scale-95 touch-manipulation"
               title="Daily Tracking Streak - Click to view League & Badges"
             >
-              <Flame className="w-4 h-4 text-amber-500 fill-amber-500" />
-              <span>{streakDays}d Streak</span>
+              <div className="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center -ml-0.5 shrink-0">
+                <Flame className="w-3.5 h-3.5 text-white fill-white transition-transform group-hover:scale-110" />
+              </div>
+              <span className="tracking-tight">{streakDays}d</span>
+              <span className="text-[10px] font-black uppercase tracking-wider bg-black/20 text-orange-100 px-1.5 py-0.5 rounded-full">
+                Streak
+              </span>
             </button>
 
             <button 

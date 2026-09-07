@@ -415,10 +415,8 @@ export const GamificationHub = ({
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+                      <div className="text-xs text-slate-500 font-medium">
                         <span className="text-slate-700 font-bold">{user.goalSummary}</span>
-                        <span>•</span>
-                        <span className="truncate max-w-[200px] sm:max-w-xs">{user.recentActivity}</span>
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { Calendar } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import { TimeRange } from '../types';
 
 interface TimeFilterBarProps {
@@ -20,15 +20,22 @@ export const TimeFilterBar = ({
   ];
 
   return (
-    <div className="bg-white rounded-[24px] border border-emerald-100 p-3 shadow-xs mb-4">
-      <div className="flex items-center gap-2 text-slate-800 font-bold text-xs sm:text-sm mb-2">
-        <Calendar className="w-4 h-4 text-emerald-500 shrink-0" />
-        <span className="truncate">{dateLabel}</span>
+    <div 
+      id="time-filter-widget"
+      className="bg-slate-100/90 backdrop-blur-xs border border-slate-200/80 rounded-2xl p-1.5 sm:p-2 mb-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+    >
+      <div className="flex items-center gap-2 px-1.5 py-0.5 min-w-0">
+        <div className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+          <SlidersHorizontal className="w-3.5 h-3.5" />
+        </div>
+        <div className="min-w-0 text-xs">
+          <span className="font-bold text-slate-700 truncate block">{dateLabel}</span>
+        </div>
       </div>
 
       <div 
         id="time-range-segmented-control"
-        className="grid grid-cols-4 gap-1.5 bg-emerald-50/80 p-1 rounded-2xl border border-emerald-100/60"
+        className="grid grid-cols-4 gap-1 bg-slate-200/70 p-1 rounded-xl sm:w-80"
       >
         {options.map((opt) => {
           const isSelected = selectedRange === opt.id;
@@ -38,10 +45,10 @@ export const TimeFilterBar = ({
               id={`filter-range-${opt.id}`}
               type="button"
               onClick={() => onSelectRange(opt.id)}
-              className={`py-2 px-1 text-xs sm:text-sm font-bold rounded-xl transition-all text-center min-h-[40px] touch-manipulation flex items-center justify-center ${
+              className={`py-1.5 px-2.5 text-xs font-bold rounded-lg transition-all text-center min-h-[34px] touch-manipulation flex items-center justify-center ${
                 isSelected
-                  ? 'bg-emerald-500 text-white font-black shadow-sm -translate-y-0.5'
-                  : 'text-emerald-800/80 hover:text-emerald-950 hover:bg-emerald-100/60'
+                  ? 'bg-white text-emerald-700 font-black shadow-xs ring-1 ring-slate-900/5'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/40'
               }`}
             >
               {opt.label}
