@@ -14,7 +14,7 @@ import {
 
 export const INITIAL_USER_GOAL: PersonalGoal = {
   id: 'goal-1',
-  title: 'Lose 5kg within 6 Months & Boost Heart Health',
+  title: 'Your Goal: Lose 5KG in 6 months',
   category: 'weight-loss',
   targetDate: '2026-12-31',
   startValue: 74.5,

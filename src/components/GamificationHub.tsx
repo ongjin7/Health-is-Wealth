@@ -81,9 +81,9 @@ export const GamificationHub = ({
   const unlockedCount = badges.filter(b => b.isUnlocked).length;
 
   return (
-    <div id="gamification-hub" className="space-y-4">
+    <div id="gamification-hub" className="rounded-[28px] border border-emerald-200/90 shadow-sm bg-white overflow-hidden">
       {/* Main Gamification Banner & Level Card */}
-      <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white rounded-[28px] p-5 sm:p-6 shadow-sm border border-emerald-700/60 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-5 sm:p-6 relative overflow-hidden">
         {/* Subtle decorative glow */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -91,7 +91,7 @@ export const GamificationHub = ({
           <div>
             <div className="flex items-center gap-1.5 text-xs text-amber-300 font-black uppercase tracking-wider mb-1">
               <Trophy className="w-4 h-4 text-amber-400" />
-              <span>Singapore Health is Wealth League • Gamified Rewards</span>
+              <span>MBAI Health is Wealth league</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               {levelName}
@@ -101,20 +101,57 @@ export const GamificationHub = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="bg-amber-400 text-amber-950 text-center px-4 py-2.5 rounded-2xl shadow-sm border border-amber-300">
+          <div className="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
+            <button
+              type="button"
+              onClick={() => setActiveTab('points')}
+              title="Click to view Point Rules & Receipts"
+              className={`text-center px-3.5 sm:px-4 py-2.5 rounded-2xl shadow-sm border transition-all cursor-pointer touch-manipulation ${
+                activeTab === 'points'
+                  ? 'bg-amber-400 text-amber-950 border-amber-300 ring-2 ring-amber-300 shadow-amber-400/20 scale-[1.03]'
+                  : 'bg-amber-400/90 hover:bg-amber-400 text-amber-950 border-amber-300/80 hover:scale-[1.02]'
+              }`}
+            >
               <span className="block text-[10px] font-black uppercase tracking-wider text-amber-900">Total Score</span>
               <span className="text-xl sm:text-2xl font-black">{totalPoints.toLocaleString()}</span>
-              <span className="block text-[10px] font-bold text-amber-900">Health Pts</span>
-            </div>
-            <div className="bg-emerald-800/80 border border-emerald-600/80 text-center px-4 py-2.5 rounded-2xl">
+              <span className="block text-[10px] font-bold text-amber-900">Health Pts ⚡</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('leaderboard')}
+              title="Click to view Friends Leaderboard & League"
+              className={`text-center px-3.5 sm:px-4 py-2.5 rounded-2xl border transition-all cursor-pointer touch-manipulation ${
+                activeTab === 'leaderboard'
+                  ? 'bg-emerald-800 text-white border-emerald-400 ring-2 ring-emerald-400 shadow-emerald-400/20 scale-[1.03]'
+                  : 'bg-emerald-800/80 hover:bg-emerald-800 text-white border-emerald-600/80 hover:scale-[1.02]'
+              }`}
+            >
               <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-300">Daily Streak</span>
               <span className="text-xl sm:text-2xl font-black text-white flex items-center justify-center gap-1">
                 <Flame className="w-5 h-5 text-amber-400 fill-amber-400" />
                 {streakDays}d
               </span>
-              <span className="block text-[10px] font-medium text-emerald-300">On Track</span>
-            </div>
+              <span className="block text-[10px] font-medium text-emerald-300">On Track 🔥</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('badges')}
+              title="Click to view Milestone Badges"
+              className={`text-center px-3.5 sm:px-4 py-2.5 rounded-2xl border transition-all cursor-pointer touch-manipulation ${
+                activeTab === 'badges'
+                  ? 'bg-teal-800 text-white border-teal-300 ring-2 ring-teal-300 shadow-teal-400/20 scale-[1.03]'
+                  : 'bg-teal-900/70 hover:bg-teal-800 text-white border-teal-700/80 hover:scale-[1.02]'
+              }`}
+            >
+              <span className="block text-[10px] font-black uppercase tracking-wider text-teal-300">Badges</span>
+              <span className="text-xl sm:text-2xl font-black text-white flex items-center justify-center gap-1">
+                <Award className="w-4 h-4 text-amber-400" />
+                {unlockedCount}/{badges.length}
+              </span>
+              <span className="block text-[10px] font-medium text-teal-300">Milestones 🏆</span>
+            </button>
           </div>
         </div>
 
@@ -141,62 +178,88 @@ export const GamificationHub = ({
               🎯 <strong className="text-white">Goal Tie-in:</strong> Maintaining habit discipline for 69.5kg target weight & 64 bpm resting HR
             </span>
             {nextUserAbove && (
-              <span className="text-amber-300 font-bold bg-emerald-900/90 px-2 py-0.5 rounded-lg border border-emerald-700">
+              <button
+                type="button"
+                onClick={() => setActiveTab('leaderboard')}
+                className="text-amber-300 font-bold bg-emerald-900/90 hover:bg-emerald-950 px-2 py-0.5 rounded-lg border border-emerald-700 cursor-pointer transition-colors"
+                title="View in Leaderboard"
+              >
                 Rank #{currentUserRank} • Only {nextUserAbove.points - totalPoints} pts to overtake {nextUserAbove.name}!
-              </span>
+              </button>
             )}
           </div>
         </div>
 
-        {/* Hub Tab Switcher */}
-        <div className="grid grid-cols-3 gap-2 mt-5 bg-emerald-950/70 p-1.5 rounded-2xl border border-emerald-700/50">
-          <button
-            type="button"
-            id="tab-gamification-badges"
-            onClick={() => setActiveTab('badges')}
-            className={`py-2 px-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 touch-manipulation ${
-              activeTab === 'badges'
-                ? 'bg-amber-400 text-amber-950 shadow-sm -translate-y-0.5'
-                : 'text-emerald-200 hover:text-white hover:bg-emerald-800/50'
-            }`}
-          >
-            <Award className="w-4 h-4" />
-            <span>Milestone Badges ({unlockedCount}/{badges.length})</span>
-          </button>
+        {/* Hub Tab Switcher Docked at Bottom of Banner */}
+        <div className="mt-5 pt-4 border-t border-emerald-700/60">
+          <div className="flex items-center justify-between text-xs mb-2">
+            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300/90 flex items-center gap-1.5">
+              <span>Select Active Rewards Module:</span>
+            </span>
+            <span className="text-[11px] font-bold text-amber-300 bg-emerald-950/90 px-2.5 py-0.5 rounded-full border border-emerald-700/80 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              Showing: {activeTab === 'leaderboard' ? 'Friends Leaderboard' : activeTab === 'badges' ? 'Milestone Badges' : 'Point Rules & History'}
+            </span>
+          </div>
 
-          <button
-            type="button"
-            id="tab-gamification-leaderboard"
-            onClick={() => setActiveTab('leaderboard')}
-            className={`py-2 px-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 touch-manipulation ${
-              activeTab === 'leaderboard'
-                ? 'bg-amber-400 text-amber-950 shadow-sm -translate-y-0.5'
-                : 'text-emerald-200 hover:text-white hover:bg-emerald-800/50'
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            <span>Friends Leaderboard</span>
-          </button>
+          <div className="grid grid-cols-3 gap-2 bg-emerald-950/80 p-1.5 rounded-2xl border border-emerald-700/50">
+            <button
+              type="button"
+              id="tab-gamification-leaderboard"
+              onClick={() => setActiveTab('leaderboard')}
+              className={`relative py-2.5 px-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 touch-manipulation cursor-pointer ${
+                activeTab === 'leaderboard'
+                  ? 'bg-amber-400 text-amber-950 shadow-md scale-[1.01]'
+                  : 'text-emerald-200 hover:text-white hover:bg-emerald-800/50'
+              }`}
+            >
+              <Users className="w-4 h-4 shrink-0" />
+              <span className="truncate">Friends Leaderboard</span>
+              {activeTab === 'leaderboard' && (
+                <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-0 h-0 border-x-[6px] border-x-transparent border-t-[6px] border-t-amber-400 z-20" />
+              )}
+            </button>
 
-          <button
-            type="button"
-            id="tab-gamification-points"
-            onClick={() => setActiveTab('points')}
-            className={`py-2 px-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 touch-manipulation ${
-              activeTab === 'points'
-                ? 'bg-amber-400 text-amber-950 shadow-sm -translate-y-0.5'
-                : 'text-emerald-200 hover:text-white hover:bg-emerald-800/50'
-            }`}
-          >
-            <Zap className="w-4 h-4" />
-            <span>Point Rules & History</span>
-          </button>
+            <button
+              type="button"
+              id="tab-gamification-badges"
+              onClick={() => setActiveTab('badges')}
+              className={`relative py-2.5 px-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 touch-manipulation cursor-pointer ${
+                activeTab === 'badges'
+                  ? 'bg-amber-400 text-amber-950 shadow-md scale-[1.01]'
+                  : 'text-emerald-200 hover:text-white hover:bg-emerald-800/50'
+              }`}
+            >
+              <Award className="w-4 h-4 shrink-0" />
+              <span className="truncate">Milestone Badges ({unlockedCount}/{badges.length})</span>
+              {activeTab === 'badges' && (
+                <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-0 h-0 border-x-[6px] border-x-transparent border-t-[6px] border-t-amber-400 z-20" />
+              )}
+            </button>
+
+            <button
+              type="button"
+              id="tab-gamification-points"
+              onClick={() => setActiveTab('points')}
+              className={`relative py-2.5 px-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 touch-manipulation cursor-pointer ${
+                activeTab === 'points'
+                  ? 'bg-amber-400 text-amber-950 shadow-md scale-[1.01]'
+                  : 'text-emerald-200 hover:text-white hover:bg-emerald-800/50'
+              }`}
+            >
+              <Zap className="w-4 h-4 shrink-0" />
+              <span className="truncate">Point Rules & History</span>
+              {activeTab === 'points' && (
+                <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-0 h-0 border-x-[6px] border-x-transparent border-t-[6px] border-t-amber-400 z-20" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* TAB 1: MILESTONE BADGES */}
       {activeTab === 'badges' && (
-        <div className="card bg-white rounded-[28px] border border-emerald-100 p-5 sm:p-6 shadow-sm space-y-4">
+        <div className="p-5 sm:p-6 space-y-4 border-t border-emerald-100 bg-white">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-100 pb-3">
             <div>
               <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
@@ -329,7 +392,7 @@ export const GamificationHub = ({
 
       {/* TAB 2: FRIENDS LEADERBOARD */}
       {activeTab === 'leaderboard' && (
-        <div className="card bg-white rounded-[28px] border border-emerald-100 p-5 sm:p-6 shadow-sm space-y-4">
+        <div className="p-5 sm:p-6 space-y-4 border-t border-emerald-100 bg-white">
           <div className="border-b border-emerald-100 pb-3">
             <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
               <Users className="w-5 h-5 text-emerald-600" />
@@ -457,7 +520,7 @@ export const GamificationHub = ({
 
       {/* TAB 3: POINT RULES & AUDIT HISTORY */}
       {activeTab === 'points' && (
-        <div className="card bg-white rounded-[28px] border border-emerald-100 p-5 sm:p-6 shadow-sm space-y-5">
+        <div className="p-5 sm:p-6 space-y-5 border-t border-emerald-100 bg-white">
           <div>
             <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
               <Zap className="w-5 h-5 text-amber-500" />

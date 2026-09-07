@@ -2,9 +2,9 @@ import { TimeRange } from '../types';
 
 export const TIME_RANGE_LABELS: Record<TimeRange, string> = {
   day: 'Today: Sunday, 6 Sep 2026',
-  week: 'This Week: 31 Aug – 6 Sep 2026',
-  month: 'Past 30 Days: 8 Aug – 6 Sep 2026',
-  year: 'This Year: 2026 Year-to-Date',
+  week: '31 Aug – 6 Sep 2026',
+  month: '8 Aug – 6 Sep 2026',
+  year: '1 Jan – 6 Sep 2026',
 };
 
 /**

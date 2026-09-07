@@ -7,7 +7,6 @@ import {
   AlertCircle, 
   Award, 
   ChevronRight, 
-  Plus, 
   Sparkles,
   ArrowUpRight,
   Footprints,
@@ -225,6 +224,51 @@ export const DashboardScreen = ({
         </div>
       </section>
 
+      {/* Quick Deep Dive Navigation - Compact Cool Icon Buttons */}
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          id="btn-goto-activity-deepdive"
+          onClick={() => onNavigateToScreen('activity')}
+          className="group flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white border border-emerald-200/80 hover:border-emerald-400 hover:shadow-md transition-all active:scale-98 cursor-pointer touch-manipulation shadow-2xs"
+          title="Activity Deep Dive"
+        >
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center shadow-xs shadow-emerald-500/25 group-hover:scale-105 transition-transform shrink-0">
+              <Flame className="w-5 h-5 fill-white/20 text-white" />
+            </div>
+            <div className="text-left">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block leading-none mb-0.5">Deep Dive</span>
+              <span className="text-xs sm:text-sm font-black text-slate-800 group-hover:text-emerald-700 transition-colors leading-tight">Activity</span>
+            </div>
+          </div>
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all shrink-0">
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </div>
+        </button>
+
+        <button
+          type="button"
+          id="btn-goto-consumption-deepdive"
+          onClick={() => onNavigateToScreen('consumption')}
+          className="group flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white border border-amber-200/80 hover:border-amber-400 hover:shadow-md transition-all active:scale-98 cursor-pointer touch-manipulation shadow-2xs"
+          title="Consumption Deep Dive"
+        >
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-400 text-white flex items-center justify-center shadow-xs shadow-amber-500/25 group-hover:scale-105 transition-transform shrink-0">
+              <Utensils className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
+            </div>
+            <div className="text-left">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 block leading-none mb-0.5">Deep Dive</span>
+              <span className="text-xs sm:text-sm font-black text-slate-800 group-hover:text-amber-700 transition-colors leading-tight">Consumption</span>
+            </div>
+          </div>
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-all shrink-0">
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          </div>
+        </button>
+      </div>
+
       {/* Goal Progress Section (Styled with deep emerald card and visual chart from Vibrant Palette) */}
       <section 
         id="personal-goals-section"
@@ -232,7 +276,7 @@ export const DashboardScreen = ({
       >
         <div className="flex items-center justify-between gap-2 mb-4">
           <h3 className="text-base sm:text-lg font-black tracking-tight">
-            Goal: <span className="text-emerald-300">Lose 5KG in 6 mths</span>
+            Your Goal: <span className="text-emerald-300">Lose 5KG in 6 months</span>
           </h3>
           <span className="text-xs font-black text-emerald-200 bg-emerald-900/80 px-2.5 py-1 rounded-lg border border-emerald-700">
             48% Reached
@@ -241,36 +285,58 @@ export const DashboardScreen = ({
 
         {/* Visual Chart from Vibrant Palette Design */}
         <div className="bg-emerald-900/50 border border-emerald-700/60 rounded-2xl p-4 mb-4">
-          <div className="flex items-end gap-3 h-32 pt-2">
-            <div className="flex-1 flex flex-col items-center gap-2">
-              <div className="w-full bg-emerald-700 rounded-t-xl flex items-center justify-center text-[10px] font-bold text-emerald-200" style={{ height: '100%' }}>
+          <div className="flex items-end gap-3 h-28 pt-2 pb-1 border-b border-emerald-700/50">
+            {/* July: 74.5kg (Start) */}
+            <div className="flex-1 h-full flex items-end">
+              <div 
+                className="w-full bg-emerald-700 rounded-t-xl flex items-center justify-center text-[10px] font-bold text-emerald-200 transition-all duration-300 shadow-xs" 
+                style={{ height: '100%' }}
+              >
                 74.5kg
               </div>
-              <span className="text-[11px] text-emerald-200 font-medium">July</span>
             </div>
-            <div className="flex-1 flex flex-col items-center gap-2">
-              <div className="w-full bg-emerald-600 rounded-t-xl flex items-center justify-center text-[10px] font-bold text-emerald-100" style={{ height: '85%' }}>
+            {/* August: 73.2kg */}
+            <div className="flex-1 h-full flex items-end">
+              <div 
+                className="w-full bg-emerald-600 rounded-t-xl flex items-center justify-center text-[10px] font-bold text-emerald-100 transition-all duration-300 shadow-xs" 
+                style={{ height: '82%' }}
+              >
                 73.2kg
               </div>
-              <span className="text-[11px] text-emerald-200 font-medium">August</span>
             </div>
-            <div className="flex-1 flex flex-col items-center gap-2">
+            {/* September: 72.1kg */}
+            <div className="flex-1 h-full flex items-end">
               <div 
-                className="w-full bg-emerald-500 rounded-t-xl shadow-[0_-4px_10px_rgba(16,185,129,0.5)] flex items-center justify-center text-[10px] font-black text-white" 
-                style={{ height: '70%' }}
+                className="w-full bg-emerald-500 rounded-t-xl shadow-[0_-4px_12px_rgba(16,185,129,0.6)] flex items-center justify-center text-[10px] font-black text-white transition-all duration-300" 
+                style={{ height: '68%' }}
               >
                 72.1kg
               </div>
-              <span className="text-[10px] sm:text-[11px] font-black text-white text-center leading-tight">September (current)</span>
             </div>
-            <div className="flex-1 flex flex-col items-center gap-2">
+            {/* Target: 69.5kg */}
+            <div className="flex-1 h-full flex items-end">
               <div 
-                className="w-full border-2 border-dashed border-emerald-400 rounded-t-xl flex items-center justify-center text-[10px] font-bold text-emerald-300" 
-                style={{ height: '55%' }}
+                className="w-full border-2 border-dashed border-emerald-400 bg-emerald-800/40 rounded-t-xl flex items-center justify-center text-[10px] font-bold text-emerald-300 transition-all duration-300" 
+                style={{ height: '48%' }}
               >
                 69.5kg
               </div>
-              <span className="text-[11px] text-emerald-300 font-bold">Target</span>
+            </div>
+          </div>
+
+          {/* Month & Target Labels aligned at the exact same level */}
+          <div className="flex items-center gap-3 pt-2.5">
+            <div className="flex-1 text-center flex items-center justify-center">
+              <span className="text-[11px] text-emerald-200 font-semibold leading-none">July</span>
+            </div>
+            <div className="flex-1 text-center flex items-center justify-center">
+              <span className="text-[11px] text-emerald-200 font-semibold leading-none">August</span>
+            </div>
+            <div className="flex-1 text-center flex items-center justify-center">
+              <span className="text-[11px] text-white font-black leading-none">September</span>
+            </div>
+            <div className="flex-1 text-center flex items-center justify-center">
+              <span className="text-[11px] text-emerald-300 font-bold leading-none">Target</span>
             </div>
           </div>
         </div>
@@ -297,89 +363,6 @@ export const DashboardScreen = ({
           </div>
         </div>
       </section>
-
-      {/* Screen 2 & Screen 3 Deep Dive Shortcuts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {/* Activity shortcut */}
-        <div 
-          onClick={() => onNavigateToScreen('activity')}
-          className="card bg-white border border-emerald-100 rounded-[28px] p-5 shadow-xs hover:border-emerald-300 hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
-                <Flame className="w-5 h-5 text-emerald-600" />
-              </div>
-              <h3 className="font-black text-base text-slate-800 group-hover:text-emerald-700 transition-colors">
-                Activity Deep Dive
-              </h3>
-            </div>
-            <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-emerald-600 transition-transform group-hover:translate-x-0.5" />
-          </div>
-          <p className="text-xs text-slate-600 line-clamp-2 font-medium">
-            View detailed exercise logs, heart rate zones, training balance recommendations, and nearby Singapore sports facilities.
-          </p>
-          <div className="mt-3.5 pt-2.5 border-t border-emerald-100/70 flex items-center justify-between text-xs font-bold text-emerald-700">
-            <span>{exercises.length} activities logged</span>
-            <span className="flex items-center gap-1">Open Screen 2 &rarr;</span>
-          </div>
-        </div>
-
-        {/* Consumption shortcut */}
-        <div 
-          onClick={() => onNavigateToScreen('consumption')}
-          className="card bg-white border border-emerald-100 rounded-[28px] p-5 shadow-xs hover:border-amber-300 hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
-                <Utensils className="w-5 h-5 text-amber-600" />
-              </div>
-              <h3 className="font-black text-base text-slate-800 group-hover:text-amber-700 transition-colors">
-                Consumption Deep Dive
-              </h3>
-            </div>
-            <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-amber-600 transition-transform group-hover:translate-x-0.5" />
-          </div>
-          <p className="text-xs text-slate-600 line-clamp-2 font-medium">
-            Explore breakfast, lunch, dinner, and supper logs, sugar insights (sweet drinks habit), and nearby Healthier Choice dining options.
-          </p>
-          <div className="mt-3.5 pt-2.5 border-t border-emerald-100/70 flex items-center justify-between text-xs font-bold text-amber-700">
-            <span>{foods.length} foods recorded</span>
-            <span className="flex items-center gap-1">Open Screen 3 &rarr;</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Action Bar to launch input widget directly */}
-      <div className="bg-emerald-500 text-white rounded-[24px] p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md shadow-emerald-200">
-        <div>
-          <h4 className="text-base font-black leading-tight">Key In Today's Health Log</h4>
-          <p className="text-xs text-emerald-100 mt-0.5 font-medium">
-            Log exercise or hawker food to update your calorie balance and gamified points live
-          </p>
-        </div>
-        <div className="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
-          <button
-            id="dashboard-key-in-exercise-btn"
-            type="button"
-            onClick={() => onOpenQuickLog('exercise')}
-            className="btn flex-1 sm:flex-initial bg-white text-emerald-800 text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-xs hover:bg-emerald-50 transition-all -translate-y-0.5 touch-manipulation flex items-center justify-center gap-1.5 cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Key In Exercise</span>
-          </button>
-          <button
-            id="dashboard-key-in-food-btn"
-            type="button"
-            onClick={() => onOpenQuickLog('food')}
-            className="btn flex-1 sm:flex-initial bg-amber-500 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl shadow-xs hover:bg-amber-600 transition-all -translate-y-0.5 touch-manipulation flex items-center justify-center gap-1.5 cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Key In Food</span>
-          </button>
-        </div>
-      </div>
 
       {/* Gamified Health Rewards, Point System, Milestone Badges & Friends Leaderboard */}
       <GamificationHub
