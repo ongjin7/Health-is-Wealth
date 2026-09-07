@@ -120,10 +120,3 @@ For the "goal dashboard lose 5kg in 6 months" chart, it does not currently refle
 **What came back:** 1 files edited with chart issue fixed.
 
 **What i changed next and why:** I accepted the fix and deployed the app to github.
-
----
-## Prompt Overview
-```
-This log omits several minor prompts. Prompts 1 to 11 document the substantive fixes made prior to pushing to GitHub.
-```
-
