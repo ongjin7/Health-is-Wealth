@@ -222,52 +222,44 @@ export const DashboardScreen = ({
               : `You're doing great! You have burnt ${totalCaloriesBurnt.toLocaleString()} kcal so far in this ${timeRange}. Only ${Math.max(0, burnTarget - totalCaloriesBurnt).toLocaleString()} more calories to burn to hit your ${timeRange} goal!`}"
           </p>
         </div>
+
+        {/* Embedded Deep Dive Navigation inside Summary Widget */}
+        <div className="mt-4 pt-3.5 border-t border-emerald-100/80 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-bold">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span className="hidden min-[360px]:inline">Deep Dive:</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              id="btn-goto-activity-deepdive"
+              onClick={() => onNavigateToScreen('activity')}
+              className="group flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 text-emerald-800 text-xs font-bold transition-all active:scale-95 shadow-2xs cursor-pointer touch-manipulation"
+              title="Activity Deep Dive"
+            >
+              <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform shrink-0">
+                <Flame className="w-3.5 h-3.5 fill-white/20 text-white" />
+              </div>
+              <span>Activity</span>
+              <ChevronRight className="w-3.5 h-3.5 text-emerald-600 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+
+            <button
+              type="button"
+              id="btn-goto-consumption-deepdive"
+              onClick={() => onNavigateToScreen('consumption')}
+              className="group flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200/80 text-amber-800 text-xs font-bold transition-all active:scale-95 shadow-2xs cursor-pointer touch-manipulation"
+              title="Consumption Deep Dive"
+            >
+              <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-amber-500 to-orange-400 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform shrink-0">
+                <Utensils className="w-3.5 h-3.5 text-white" />
+              </div>
+              <span>Consumption</span>
+              <ChevronRight className="w-3.5 h-3.5 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </div>
+        </div>
       </section>
-
-      {/* Quick Deep Dive Navigation - Compact Cool Icon Buttons */}
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          id="btn-goto-activity-deepdive"
-          onClick={() => onNavigateToScreen('activity')}
-          className="group flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white border border-emerald-200/80 hover:border-emerald-400 hover:shadow-md transition-all active:scale-98 cursor-pointer touch-manipulation shadow-2xs"
-          title="Activity Deep Dive"
-        >
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center shadow-xs shadow-emerald-500/25 group-hover:scale-105 transition-transform shrink-0">
-              <Flame className="w-5 h-5 fill-white/20 text-white" />
-            </div>
-            <div className="text-left">
-              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block leading-none mb-0.5">Deep Dive</span>
-              <span className="text-xs sm:text-sm font-black text-slate-800 group-hover:text-emerald-700 transition-colors leading-tight">Activity</span>
-            </div>
-          </div>
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-all shrink-0">
-            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </div>
-        </button>
-
-        <button
-          type="button"
-          id="btn-goto-consumption-deepdive"
-          onClick={() => onNavigateToScreen('consumption')}
-          className="group flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white border border-amber-200/80 hover:border-amber-400 hover:shadow-md transition-all active:scale-98 cursor-pointer touch-manipulation shadow-2xs"
-          title="Consumption Deep Dive"
-        >
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-400 text-white flex items-center justify-center shadow-xs shadow-amber-500/25 group-hover:scale-105 transition-transform shrink-0">
-              <Utensils className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
-            </div>
-            <div className="text-left">
-              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 block leading-none mb-0.5">Deep Dive</span>
-              <span className="text-xs sm:text-sm font-black text-slate-800 group-hover:text-amber-700 transition-colors leading-tight">Consumption</span>
-            </div>
-          </div>
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-all shrink-0">
-            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </div>
-        </button>
-      </div>
 
       {/* Goal Progress Section (Styled with deep emerald card and visual chart from Vibrant Palette) */}
       <section 
